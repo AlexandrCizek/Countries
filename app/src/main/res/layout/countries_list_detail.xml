@@ -2,16 +2,61 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="20dp">
 
+    <!-- Country Flag -->
+    <ImageView
+        android:id="@+id/countryDetailFlag"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
+        android:contentDescription="countryFlag"
+        android:layout_gravity="center"
+        android:padding="30dp"/>
+
+    <!-- Country Name -->
     <TextView
         android:id="@+id/countryDetailName"
-        android:layout_width="30dp"
-        android:layout_height="match_parent" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:text="Czechia"
+        android:layout_gravity="center"/>
 
+    <!-- Country Population -->
     <TextView
         android:id="@+id/countryDetailPopulation"
-        android:layout_width="30dp"
-        android:layout_height="match_parent" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:text="10.3m citizens"
+        android:layout_gravity="center"/>
 
+    <!-- Country Capital -->
+    <TextView
+        android:id="@+id/countryDetailCapital"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:text="Prague"
+        android:layout_gravity="center"/>
+
+    <!-- Country Continent -->
+    <TextView
+        android:id="@+id/countryDetailContinent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:text="Europe"
+        android:layout_gravity="center"/>
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp" />
 </LinearLayout>
