@@ -43,7 +43,10 @@ class CountriesListActivity : AppCompatActivity() {
             country?.let {
                 val intent = Intent(this, CountriesListDetailActivity::class.java)
                 intent.putExtra("COUNTRY_NAME", it.name.common)
+                intent.putExtra("COUNTRY_FLAG", it.flags.png)
                 intent.putExtra("COUNTRY_POPULATION", it.population)
+                intent.putExtra("COUNTRY_CONTINENT", it.continents.first())
+                intent.putExtra("COUNTRY_CAPITAL", it.capital.first())
                 startActivity(intent)
             }
         }
