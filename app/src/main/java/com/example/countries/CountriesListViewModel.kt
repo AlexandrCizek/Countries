@@ -12,10 +12,25 @@ class CountriesListViewModel(private val repository: CountryRepository) : ViewMo
     private val _countries = MutableLiveData<List<Country>>()
     val countries : LiveData<List<Country>> = _countries
 
+    private fun updateCountriesList(countries: List<Country>?) {
+        countries?.let {
+            val sortedCountries = countries.sortedBy { it.name.common }
+            _countries.postValue(sortedCountries)
+            return
+        }
+    }
+
     fun getCountriesByName(name: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val result = repository.getCountriesByName(name)
-            _countries.postValue(result)
+            updateCountriesList(result)
+        }
+    }
+
+    fun getCountriesByRegion(region: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = repository.getCountriesByRegion(region)
+            updateCountriesList(result)
         }
     }
 }
