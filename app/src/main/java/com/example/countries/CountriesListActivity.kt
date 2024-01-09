@@ -54,5 +54,25 @@ class CountriesListActivity : AppCompatActivity() {
             binding.searchEditText.setText("")
         }
 
+        binding.europeButton.setOnClickListener {
+            viewModel.getCountriesByRegion("Europe")
+            binding.searchEditText.setText("")
+        }
+
+        binding.asiaButton.setOnClickListener {
+            viewModel.getCountriesByRegion("Asia")
+            binding.searchEditText.setText("")
+        }
+
+        binding.americaButton.setOnClickListener {
+            viewModel.getCountriesByRegion("America")
+            binding.searchEditText.setText("")
+        }
+
+        binding.africaButton.setOnClickListener {
+            viewModel.getCountriesByRegion("Africa")
+            binding.searchEditText.setText("")
+        }
+
     }
 }
