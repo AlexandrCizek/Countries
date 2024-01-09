@@ -2,11 +2,11 @@ package com.example.countries.model
 
 data class Country(
     val name: CountryName,
-    val languages: Map<String,String>,
     val flag: String,
     val flags: CountryFlags,
     val population: Int,
-    val continents: List<String>
+    val continents: List<String>,
+    val capital: List<String>
 )
 
 data class CountryName(
