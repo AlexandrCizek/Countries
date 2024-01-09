@@ -30,7 +30,5 @@ class CountriesListActivity : AppCompatActivity() {
 
         countriesListBinding.countriesListViewModel = countriesListViewModel
         countriesListBinding.lifecycleOwner = this
-
-        countriesListViewModel.getCountriesByName("Germany")
     }
 }
