@@ -56,4 +56,9 @@ dependencies {
     // Retrofit - for working with REST API
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:3.9.0")}
+    implementation("com.squareup.okhttp3:logging-interceptor:3.9.0")
+
+    // Picasso - for loading image from a url
+    implementation("com.squareup.picasso:picasso:2.8")
+
+}
