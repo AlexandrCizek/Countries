@@ -47,5 +47,12 @@ class CountriesListActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         }
+
+        binding.searchButton.setOnClickListener {
+            val inputText = binding.searchEditText.text.toString()
+            viewModel.getCountriesByName(inputText)
+            binding.searchEditText.setText("")
+        }
+
     }
 }
