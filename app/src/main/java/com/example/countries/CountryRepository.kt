@@ -1,9 +1,15 @@
 package com.example.countries
 
+import androidx.lifecycle.LiveData
 import com.example.countries.api.CountriesApiService
 import com.example.countries.model.Country
+import com.example.countries.roomDatabase.CountryDao
 
-class CountryRepository(private val countriesApiService: CountriesApiService) {
+class CountryRepository(
+    private val countriesApiService: CountriesApiService,
+    private val countryDao: CountryDao
+) {
+    val allCountries: LiveData<List<Country>> = countryDao.getAllCountries()
     suspend fun getCountriesByName(name: String) : List<Country>? {
         val response = countriesApiService.getCountriesByName(name)
 
@@ -22,5 +28,13 @@ class CountryRepository(private val countriesApiService: CountriesApiService) {
         } else {
             return null
         }
+    }
+
+    suspend fun insert(country: Country) {
+        countryDao.insert(country)
+    }
+
+    fun getSavedCountries(): LiveData<List<Country>> {
+        return countryDao.getAllCountries()
     }
 }
