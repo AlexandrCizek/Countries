@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import com.example.countries.api.CountriesApiService
 import com.example.countries.model.Country
 import com.example.countries.roomDatabase.CountryDao
+import kotlinx.coroutines.flow.Flow
 
 class CountryRepository(
     private val countriesApiService: CountriesApiService,
@@ -33,7 +34,11 @@ class CountryRepository(
         countryDao.insert(country)
     }
 
-    suspend fun getSavedCountries(): List<Country> {
+    suspend fun delete(countryId: Int) {
+        countryDao.delete(countryId)
+    }
+
+    suspend fun getSavedCountries(): Flow<List<Country>> {
         return countryDao.getAllCountries()
     }
 }
