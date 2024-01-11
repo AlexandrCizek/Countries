@@ -43,10 +43,11 @@ class CountriesListActivity : AppCompatActivity() {
             country?.let {
                 val intent = Intent(this, CountriesListDetailActivity::class.java)
                 intent.putExtra("COUNTRY_NAME", it.name.common)
-                intent.putExtra("COUNTRY_FLAG", it.flags.png)
+                intent.putExtra("COUNTRY_FLAGS", it.flags.png)
                 intent.putExtra("COUNTRY_POPULATION", it.population)
                 intent.putExtra("COUNTRY_CONTINENT", it.continents.first())
                 intent.putExtra("COUNTRY_CAPITAL", it.capital.first())
+                intent.putExtra("COUNTRY_FLAG", it.flag)
                 startActivity(intent)
             }
         }
@@ -77,5 +78,9 @@ class CountriesListActivity : AppCompatActivity() {
             binding.searchEditText.setText("")
         }
 
+        binding.showSavedCountriesButton.setOnClickListener {
+            val intent = Intent(this, SavedCountriesActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
