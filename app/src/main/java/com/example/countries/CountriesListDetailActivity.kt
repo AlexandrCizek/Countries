@@ -1,5 +1,6 @@
 package com.example.countries
 
+import android.database.sqlite.SQLiteConstraintException
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +8,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.lifecycleScope
 import com.example.countries.model.Country
 import com.example.countries.model.CountryFlags
@@ -26,6 +28,7 @@ class CountriesListDetailActivity : AppCompatActivity() {
             return
         }
 
+        val id = intent.getIntExtra("COUNTRY_ID", -1)
         val flagUrl:String = intent.getStringExtra("COUNTRY_FLAGS") ?: "No Flag Url"
         val flagEmoji = intent.getStringExtra("COUNTRY_FLAG") ?: "No Emoji"
         val name: String = intent.getStringExtra("COUNTRY_NAME") ?: "No Name"
@@ -53,14 +56,31 @@ class CountriesListDetailActivity : AppCompatActivity() {
 
         saveButton.setOnClickListener {
             lifecycleScope.launch {
-                app.countriesRepository.insert(Country(
-                    name= CountryName(name, name),
-                    flag = flagEmoji,
-                    flags = CountryFlags(flagUrl, flagUrl),
-                    population = population,
-                    continents = listOf(continent),
-                    capital = listOf(capital)
-                ))
+                try {
+                    app.countriesRepository.insert(Country(
+                        name= CountryName(name, name),
+                        flag = flagEmoji,
+                        flags = CountryFlags(flagUrl, flagUrl),
+                        population = population,
+                        continents = listOf(continent),
+                        capital = listOf(capital)
+                    ))
+                    finish()
+                } catch (e: SQLiteConstraintException) {
+                    val alertDialogBuilder = AlertDialog.Builder(this@CountriesListDetailActivity)
+                    alertDialogBuilder.setTitle("Ooops")
+                    alertDialogBuilder.setMessage("You have already saved this country.")
+                    alertDialogBuilder.setPositiveButton("OK") { dialog, which -> }
+                    alertDialogBuilder.create().show()
+                }
+
+            }
+        }
+
+        deleteButton.setOnClickListener {
+            lifecycleScope.launch {
+                app.countriesRepository.delete(id)
+                finish()
             }
         }
     }
