@@ -12,5 +12,5 @@ interface CountryDao {
     suspend fun insert(country: Country)
 
     @Query("SELECT * FROM countries")
-    fun getAllCountries(): LiveData<List<Country>>
+    suspend fun getAllCountries(): List<Country>
 }
