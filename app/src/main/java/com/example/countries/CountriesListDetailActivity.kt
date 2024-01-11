@@ -2,9 +2,16 @@ package com.example.countries
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.lifecycle.lifecycleScope
+import com.example.countries.model.Country
+import com.example.countries.model.CountryFlags
+import com.example.countries.model.CountryName
 import com.squareup.picasso.Picasso
+import kotlinx.coroutines.launch
 import java.text.NumberFormat
 
 class CountriesListDetailActivity : AppCompatActivity() {
@@ -12,11 +19,18 @@ class CountriesListDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.countries_list_detail)
 
-        val flagUrl = intent.getStringExtra("COUNTRY_FLAG")
-        val name = intent.getStringExtra("COUNTRY_NAME")
+        val appContext = application
+        val app = appContext as? MyApplication ?: run {
+            Log.e("CountriesListActivity", "Application context is not MyApplication")
+            return
+        }
+
+        val flagUrl:String = intent.getStringExtra("COUNTRY_FLAGS") ?: "No Flag Url"
+        val flagEmoji = intent.getStringExtra("COUNTRY_FLAG") ?: "No Emoji"
+        val name: String = intent.getStringExtra("COUNTRY_NAME") ?: "No Name"
         val population = intent.getIntExtra("COUNTRY_POPULATION", 0)
-        val capital = intent.getStringExtra("COUNTRY_CAPITAL")
-        val continent = intent.getStringExtra("COUNTRY_CONTINENT")
+        val capital: String = intent.getStringExtra("COUNTRY_CAPITAL") ?: "No Capital"
+        val continent: String = intent.getStringExtra("COUNTRY_CONTINENT") ?: "No Continent"
 
         val flagImage = findViewById<ImageView>(R.id.countryDetailFlag)
         Picasso.get().load(flagUrl).into(flagImage)
@@ -25,6 +39,20 @@ class CountriesListDetailActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.countryDetailPopulation).text = "Citizens: " + formatPopulation(population)
         findViewById<TextView>(R.id.countryDetailCapital).text = "Capital: " + capital
         findViewById<TextView>(R.id.countryDetailContinent).text = "Continent: " + continent
+
+        val saveButton = findViewById<Button>(R.id.saveButton)
+        saveButton.setOnClickListener {
+            lifecycleScope.launch {
+                app.countriesRepository.insert(Country(
+                    name= CountryName(name, name),
+                    flag = flagEmoji,
+                    flags = CountryFlags(flagUrl, flagUrl),
+                    population = population,
+                    continents = listOf(continent),
+                    capital = listOf(capital)
+                ))
+            }
+        }
     }
 
     private fun formatPopulation(population : Int) : String {
