@@ -3,6 +3,7 @@ package com.example.countries
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -31,6 +32,7 @@ class CountriesListDetailActivity : AppCompatActivity() {
         val population = intent.getIntExtra("COUNTRY_POPULATION", 0)
         val capital: String = intent.getStringExtra("COUNTRY_CAPITAL") ?: "No Capital"
         val continent: String = intent.getStringExtra("COUNTRY_CONTINENT") ?: "No Continent"
+        val actionType: String = intent.getStringExtra("ACTION_TYPE")?: ""
 
         val flagImage = findViewById<ImageView>(R.id.countryDetailFlag)
         Picasso.get().load(flagUrl).into(flagImage)
@@ -41,6 +43,14 @@ class CountriesListDetailActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.countryDetailContinent).text = "Continent: " + continent
 
         val saveButton = findViewById<Button>(R.id.saveButton)
+        val deleteButton = findViewById<Button>(R.id.deleteButton)
+
+        if (actionType == "SAVE") {
+            saveButton.visibility = View.VISIBLE
+        } else if (actionType == "DELETE") {
+            deleteButton.visibility = View.VISIBLE
+        }
+
         saveButton.setOnClickListener {
             lifecycleScope.launch {
                 app.countriesRepository.insert(Country(
