@@ -38,6 +38,7 @@ class SavedCountriesActivity : AppCompatActivity() {
             val country = viewModel.countries.value?.get(position)
             country?.let {
                 val intent = Intent(this, CountriesListDetailActivity::class.java)
+                intent.putExtra("COUNTRY_ID", it.id)
                 intent.putExtra("COUNTRY_NAME", it.name.common)
                 intent.putExtra("COUNTRY_FLAGS", it.flags.png)
                 intent.putExtra("COUNTRY_POPULATION", it.population)
