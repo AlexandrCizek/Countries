@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.countries.model.Country
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class SavedCountriesViewModel(private val repository: CountryRepository) : ViewModel() {
@@ -23,10 +24,11 @@ class SavedCountriesViewModel(private val repository: CountryRepository) : ViewM
         }
     }
 
-    fun getSavedCountries() {
+    private fun getSavedCountries() {
         viewModelScope.launch {
-            val result = repository.getSavedCountries()
-            updateCountriesList(result)
+            repository.getSavedCountries().collect() { countries ->
+                updateCountriesList(countries)
+            }
         }
     }
 }
