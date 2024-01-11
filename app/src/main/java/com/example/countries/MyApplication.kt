@@ -1,7 +1,9 @@
 package com.example.countries
 
 import android.app.Application
+import androidx.room.Room
 import com.example.countries.api.CountriesApiService
+import com.example.countries.roomDatabase.CountryDatabase
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -14,11 +16,15 @@ class MyApplication : Application() {
         retrofit.create(CountriesApiService::class.java)
     }
 
-    val countriesRepository: CountryRepository by lazy {
-        CountryRepository(countriesApiService)
+    val countryDatabase by lazy {
+        Room.databaseBuilder(
+            applicationContext,
+            CountryDatabase::class.java,
+            "countries.db"
+        ).build()
     }
 
-    override fun onCreate() {
-        super.onCreate()
+    val countriesRepository: CountryRepository by lazy {
+        CountryRepository(countriesApiService, countryDatabase.countryDao())
     }
 }
