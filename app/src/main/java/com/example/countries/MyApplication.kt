@@ -20,7 +20,7 @@ class MyApplication : Application() {
         Room.databaseBuilder(
             applicationContext,
             CountryDatabase::class.java,
-            "countries.db"
+            "countries"
         ).build()
     }
 
