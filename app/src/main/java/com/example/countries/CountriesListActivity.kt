@@ -48,6 +48,7 @@ class CountriesListActivity : AppCompatActivity() {
                 intent.putExtra("COUNTRY_CONTINENT", it.continents.first())
                 intent.putExtra("COUNTRY_CAPITAL", it.capital.first())
                 intent.putExtra("COUNTRY_FLAG", it.flag)
+                intent.putExtra("ACTION_TYPE", "SAVE")
                 startActivity(intent)
             }
         }
