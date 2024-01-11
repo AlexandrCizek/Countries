@@ -9,7 +9,6 @@ class CountryRepository(
     private val countriesApiService: CountriesApiService,
     private val countryDao: CountryDao
 ) {
-    val allCountries: LiveData<List<Country>> = countryDao.getAllCountries()
     suspend fun getCountriesByName(name: String) : List<Country>? {
         val response = countriesApiService.getCountriesByName(name)
 
@@ -34,7 +33,7 @@ class CountryRepository(
         countryDao.insert(country)
     }
 
-    fun getSavedCountries(): LiveData<List<Country>> {
+    suspend fun getSavedCountries(): List<Country> {
         return countryDao.getAllCountries()
     }
 }
